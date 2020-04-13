@@ -32,16 +32,27 @@ for i in stocks:
     webpage = uClient.read()
     uClient.close()
 
-    page_soup = bs(webpage,"html.parser")
-    value = page_soup.find('span',{"class":"Trsdu(0.3s) Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(b)"})
-    cur_price = value.text.replace(',','')
+    page_soup = bs(webpage,"lxml")
+    cur_price = page_soup.find('span',{"class":"Trsdu(0.3s) Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(b)"})
+    volume = page_soup.find('td',{'data-test':'TD_VOLUME-value'})
+    day_range = page_soup.find('td',{'data-test':'DAYS_RANGE-value'})
+    x = day_range.text.split(' ')
+    low = x[0];
+    high = x[2];
     
     mycursor = conn.cursor()
     mycursor.execute("use major1db;")
-    mycursor.execute("update stock_predicted set cur_price = %s where stk_name = %s;",(float(cur_price),i))
+    mycursor.execute("update stock_predicted set cur_price = %s where stk_name = %s;",(float(cur_price.text.replace(',','')),i))
+    mycursor.execute("update market set volume = %s where stk_name = %s;",(int(volume.text.replace(',','')),i))
+    mycursor.execute("update market set high = %s where stk_name = %s;",(float(high.replace(',','')),i))
+    mycursor.execute("update market set low = %s where stk_name = %s;",(float(low.replace(',','')),i))
     conn.commit()
 
 mycursor.execute("select * from stock_predicted")
    
+for i in mycursor:
+    print(i)
+
+mycursor.execute("select * from market")
 for i in mycursor:
     print(i)
