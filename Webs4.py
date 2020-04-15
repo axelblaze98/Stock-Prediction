@@ -27,7 +27,7 @@ password = '#####'
 conn = pymysql.connect(host, user=user,port=port,passwd=password, db=dbname)
 mycursor = conn.cursor()
 
-end_time = time(2,40)
+end_time = time(16,00)
 
 def timeUP(time_now):
     if time_now > end_time:
@@ -36,7 +36,8 @@ def timeUP(time_now):
         return True
     
 def run_check():
-    time_now = datetime.now(pytz.timezone('Asia/Kolkata')).time()
+    time_now = datetime.now(pytz.timezone('America/New_York')).time()
+    print(time_now)
     if timeUP(time_now):
         threading.Timer(240.0,run_check).start()
         print(time_now)
@@ -69,7 +70,7 @@ def run_check():
         #for i in mycursor:
             #    print(i)
 
-        mycursor.execute("select * from market")
-        for i in mycursor:
-            print(i)  
+        #mycursor.execute("select * from market")
+        #for i in mycursor:
+            #print(i)  
 run_check()

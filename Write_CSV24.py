@@ -32,28 +32,16 @@ for i in stocks:
     page_soup = bs(page,'lxml')
     
     volume = page_soup.find('td',{'data-test':'TD_VOLUME-value'})
-    print('Volume = '+volume.text)
     close_price = page_soup.find('td',{'data-test':'PREV_CLOSE-value'})
-    print('Closing Price = '+close_price.text)
-
     opening_price = page_soup.find('td',{'data-test':'OPEN-value'})
-    print('Opening Price = '+opening_price.text)
-
     bid_value = page_soup.find('td',{'data-test':'BID-value'})
-    print('Bid = '+bid_value.text)
-    
     ask_value = page_soup.find('td',{'data-test':'ASK-value'})
-    print('Ask value = '+ask_value.text)
-
     day_range = page_soup.find('td',{'data-test':'DAYS_RANGE-value'})
     x = day_range.text.split(' ')
     low = x[0];
     high = x[2];
 
-    print('High = '+high)
-    print('Low = '+low)
-
     with open('./Dataset/'+i+'.csv','a',newline ='') as file:
         writer = csv.writer(file)
-        writer.writerow([date,opening_price.text.replace(',',''),high.replace(',',''),low.replace(',',''),close_price.text.replace(',',''),'-',volume.text.replace(',','')])
+    writer.writerow([date,opening_price.text.replace(',',''),high.replace(',',''),low.replace(',',''),close_price.text.replace(',',''),'-',volume.text.replace(',','')])
     
