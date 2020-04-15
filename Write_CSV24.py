@@ -43,5 +43,5 @@ for i in stocks:
 
     with open('./Dataset/'+i+'.csv','a',newline ='') as file:
         writer = csv.writer(file)
-    writer.writerow([date,opening_price.text.replace(',',''),high.replace(',',''),low.replace(',',''),close_price.text.replace(',',''),'-',volume.text.replace(',','')])
+        writer.writerow([date,opening_price.text.replace(',',''),high.replace(',',''),low.replace(',',''),close_price.text.replace(',',''),'-',volume.text.replace(',','')])
     
