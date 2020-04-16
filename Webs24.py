@@ -47,6 +47,4 @@ for i in stocks:
     mycursor.execute("update market set bid = %s where stk_name = %s;",(bid_value.text,i))
     conn.commit()
     
-mycursor.execute("select * from market")
-for i in mycursor:
-    print(i)
+conn.close()

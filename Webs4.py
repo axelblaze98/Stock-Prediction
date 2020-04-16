@@ -23,11 +23,8 @@ port = 3306
 dbname = 'major1db'
 user = '#####'
 password = '#####'
-    
-conn = pymysql.connect(host, user=user,port=port,passwd=password, db=dbname)
-mycursor = conn.cursor()
 
-end_time = time(16,00)
+end_time = time(2,40)
 
 def timeUP(time_now):
     if time_now > end_time:
@@ -36,13 +33,12 @@ def timeUP(time_now):
         return True
     
 def run_check():
-    time_now = datetime.now(pytz.timezone('America/New_York')).time()
-    print(time_now)
+    time_now = datetime.now(pytz.timezone('Asia/Kolkata')).time()
     if timeUP(time_now):
         threading.Timer(240.0,run_check).start()
         print(time_now)
-        stocks = ['AAPL','AMZN','F','FB','GOOG','IBM','INTC','MCD','MSFT','ORCL']
-        
+        conn = pymysql.connect(host, user=user,port=port,passwd=password, db=dbname)
+        mycursor = conn.cursor()
         for i in stocks:
             url = 'https://in.finance.yahoo.com/quote/'+i+'?p'+i+'&.tsrc=fin-srch'
             uClient = uReq(url)
@@ -65,12 +61,6 @@ def run_check():
             mycursor.execute("update market set low = %s where stk_name = %s;",(float(low.replace(',','')),i))
             conn.commit()
 
-        #mycursor.execute("select * from stock_predicted")
-   
-        #for i in mycursor:
-            #    print(i)
-
-        #mycursor.execute("select * from market")
-        #for i in mycursor:
-            #print(i)  
+        conn.close()
+        
 run_check()

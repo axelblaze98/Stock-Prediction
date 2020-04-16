@@ -52,7 +52,4 @@ for _ in range(len(list1)):
     mycursor.execute("update stock_predicted set pr_price = %s where stkid = %s;",(y, _+1))
     conn.commit()
 
-mycursor.execute("select * from stock_predicted")
-   
-for i in mycursor:
-    print(i)
+conn.close()
