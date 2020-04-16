@@ -24,7 +24,7 @@ dbname = 'major1db'
 user = '#####'
 password = '#####'
 
-end_time = time(2,40)
+end_time = time(16, 00)
 
 def timeUP(time_now):
     if time_now > end_time:
@@ -33,8 +33,9 @@ def timeUP(time_now):
         return True
     
 def run_check():
-    time_now = datetime.now(pytz.timezone('Asia/Kolkata')).time()
+    time_now = datetime.now(pytz.timezone('America/New_York')).time()
     if timeUP(time_now):
+        print(time_now)
         threading.Timer(240.0,run_check).start()
         print(time_now)
         conn = pymysql.connect(host, user=user,port=port,passwd=password, db=dbname)
