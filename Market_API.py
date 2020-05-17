@@ -27,8 +27,8 @@ def main():
         volume = page_soup.find('td',{'data-test':'TD_VOLUME-value'})
         day_range = page_soup.find('td',{'data-test':'DAYS_RANGE-value'})
         x = day_range.text.split(' ')
-        low = x[0];
-        high = x[2];
+        low = x[0]
+        high = x[2]
         close_price = page_soup.find('td',{'data-test':'PREV_CLOSE-value'})
         open_price = page_soup.find('td',{'data-test':'OPEN-value'})
         bid_value = page_soup.find('td',{'data-test':'BID-value'})
@@ -49,4 +49,4 @@ def main():
     return jsonify(market)
 
 if __name__=='__main__':
-    app.run(host="localhost",port = 5000)
+    app.run(host="0.0.0.0")
